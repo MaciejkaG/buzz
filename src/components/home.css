@@ -1,0 +1,8 @@
+@keyframes animation-1 {
+  0% { top: 0; left: 0 }
+  50% { top: 100vh; left: 100vh }
+}
+
+.animation-1 {
+  animation: animation-1 2s infinite;
+}
