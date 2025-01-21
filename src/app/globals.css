@@ -3,14 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: rgb(0, 0, 0);
+  --foreground: rgba(255, 255, 255, 0.85);
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background);
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+button {
+  color: var(--foreground);
+  @apply backdrop:blur-md text-lg py-1.5 px-3 rounded-lg bg-blue-700 hover:bg-blue-700/90;
 }
 
 .logo {

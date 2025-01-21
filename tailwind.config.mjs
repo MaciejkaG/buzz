@@ -10,6 +10,9 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        action: "var(--action)",
+        safe: "var(--safe)",
+        danger: "var(--danger)",
       }
     },
   },
