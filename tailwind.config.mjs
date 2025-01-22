@@ -15,6 +15,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        roboto: ["var(--font-roboto)"],
+        montserrat: ["var(--font-montserrat)"],
+      }
     },
   },
   darkMode: "class",

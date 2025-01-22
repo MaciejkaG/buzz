@@ -1,0 +1,101 @@
+.bg-color {
+  width: 30rem;
+  aspect-ratio: 1;
+
+  --anim-props: 30s infinite;
+}
+
+@keyframes animation-1 {
+  0% {
+    top: 0;
+    left: 0
+  }
+
+  25% {
+    top: calc(100vh - 30rem);
+    left: calc(100vw - 30rem)
+  }
+
+  50% {
+    top: calc(100vh - 30rem);
+    left: 0
+  }
+
+  75% {
+    top: 0;
+    left: calc(100vw - 30rem)
+  }
+
+  100% {
+    top: 0;
+    left: 0
+  }
+}
+
+.animation-1 {
+  animation: animation-1 var(--anim-props);
+}
+
+@keyframes animation-2 {
+  0% {
+    top: 0;
+    left: calc(100vw - 30rem)
+  }
+
+  25% {
+    top: calc(100vh - 30rem);
+    left: 0
+  }
+
+  50% {
+    top: calc(100vh - 30rem);
+    left: calc(100vw - 30rem)
+  }
+
+  75% {
+    top: 0;
+    left: 0
+  }
+
+  100% {
+    top: 0;
+    left: calc(100vw - 30rem)
+  }
+}
+
+.animation-2 {
+  animation: animation-2 var(--anim-props);
+}
+
+@keyframes animation-3 {
+  0% {
+    top: 0;
+    left: calc(50vw - 15rem)
+  }
+
+  25% {
+    top: 0;
+    left: calc(50vw - 15rem)
+  }
+
+  75% {
+    top: calc(100vh - 30rem);
+    left: calc(50vw - 15rem)
+  }
+
+  100% {
+    top: 0;
+    left: calc(50vw - 15rem)
+  }
+}
+
+.animation-3 {
+  animation: animation-3 var(--anim-props);
+}
+
+@media only screen and (max-width: 800) {
+  .bg-color {
+    animation: none;
+    max-width: 100vw;
+  }
+}

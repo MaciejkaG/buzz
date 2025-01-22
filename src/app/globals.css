@@ -9,7 +9,7 @@
 
 body {
   color: var(--foreground);
-  background-color: var(--background);
+  /* background-color: var(--background); */
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 

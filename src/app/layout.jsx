@@ -3,6 +3,7 @@ import { Providers } from "./providers";
 
 import "./globals.css";
 import Navbar from "@/components/navbar";
+import Background from "@/components/background";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         <Providers>{children}</Providers>
+        <Background />
       </body>
     </html>
   );

@@ -1,0 +1,154 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { initSocket, getSocket } from "@/lib/socket";
+import { useRouter } from "next/navigation";
+
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Divider,
+  Snippet,
+  Spacer,
+  Checkbox,
+  Button,
+} from "@heroui/react";
+
+import "@/styles/host.css";
+
+export default function Host() {
+  const [roomId, setRoomId] = useState("");
+  const [players, setPlayers] = useState([]);
+  const [buzzOrder, setBuzzOrder] = useState([]);
+  const [isLocked, setIsLocked] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const socket = initSocket();
+
+    socket.emit("create-room", (roomId) => {
+      setRoomId(roomId);
+    });
+
+    socket.on("player-joined", ({ players }) => {
+      setPlayers(players);
+    });
+
+    socket.on("buzz-update", ({ buzzOrder }) => {
+      setBuzzOrder(buzzOrder);
+    });
+
+    socket.on("lock-update", ({ isLocked }) => {
+      setIsLocked(isLocked);
+    });
+
+    socket.on("buzzer-reset", () => {
+      setBuzzOrder([]);
+    });
+
+    return () => {
+      socket.off("player-joined");
+      socket.off("buzz-update");
+      socket.off("lock-update");
+      socket.off("buzzer-reset");
+    };
+  }, []);
+
+  const handleToggleLock = () => {
+    const socket = getSocket();
+    socket.emit("toggle-lock", { roomId });
+  };
+
+  const handleReset = () => {
+    const socket = getSocket();
+    socket.emit("reset-buzzer", { roomId });
+  };
+
+  const handleKickPlayer = (playerId) => {
+    const socket = getSocket();
+    socket.emit("kick-player", { roomId, playerId });
+  };
+
+  return (
+    <div className="mt-16 mx-4 flex gap-4 items-start flex-wrap">
+      <Card className="flex-1 min-w-fit">
+        <CardBody>
+          <h2 className="text-3xl font-bold flex items-center justify-between">
+            Kod pokoju:{" "}
+            <Snippet
+              hideSymbol
+              disableTooltip
+              color="primary"
+              className="text-4xl"
+            >
+              {roomId}
+            </Snippet>
+          </h2>
+          <Spacer y={4} />
+          <h2 className="text-2xl flex items-center justify-between">
+            Dołącz na:{" "}
+            <Snippet
+              hideSymbol
+              disableTooltip
+              color="secondary"
+              className="text-3xl"
+            >
+              buzz.mcjk.cc
+            </Snippet>
+          </h2>
+        </CardBody>
+      </Card>
+      <div className="flex-[2] min-w-fit flex gap-4">
+        <Card className="flex-1">
+          <CardHeader className="flex justify-between items-center">
+            <h2>Połączeni gracze</h2>
+            <Checkbox defaultSelected>Zablokuj dołączanie</Checkbox>
+          </CardHeader>
+          <Divider />
+          <CardBody>
+            {/* Example player list */}
+            <AnimatePresence>
+              {players.map((player, index) => (
+                <motion.div
+                  key={player}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Card className="bg-default-100 mb-2">
+                    <CardBody>
+                      <p className="flex justify-between items-center">
+                        <span>{player}</span>
+                        <Button
+                          size="sm"
+                          color="danger"
+                          onPress={() => handleKickPlayer(player)}
+                        >
+                          Wyrzuć
+                        </Button>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </CardBody>
+        </Card>
+        <Card className="flex-1">
+          <CardHeader className="flex justify-between items-center">
+            <h2>Historia buzzerów</h2>
+            <Checkbox defaultSelected>Zablokuj buzzery</Checkbox>
+          </CardHeader>
+          <Divider />
+          <CardBody>
+            <p>To kod pokoju</p>
+          </CardBody>
+        </Card>
+      </div>
+    </div>
+  );
+}
