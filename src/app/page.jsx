@@ -1,37 +1,26 @@
 "use client";
 
-import Background from "@/components/background";
 import "@/styles/home.css";
 
-import { Button, Divider, Form, Input } from "@heroui/react";
+import { Button, Divider, Input, Form } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { initSocket } from "@/lib/socket";
 
 export default function Home() {
   const router = useRouter();
+
+  const [roomId, setRoomId] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const handleJoin = (e) => {
     e.preventDefault();
     const socket = initSocket();
 
-    socket.emit("join-room", { roomId: roomId.toUpperCase(), nickname });
-
-    socket.on("lock-update", ({ isLocked }) => {
-      setIsLocked(isLocked);
+    socket.emit("join-room", { roomId: roomId.toUpperCase(), nickname }, (success) => {
+      if (success) router.push('/join');
+      else alert("Nie udało się dołączyć do pokoju.");
     });
-
-    socket.on("buzzer-reset", () => {
-      setHasBuzzed(false);
-    });
-
-    socket.on("kicked", () => {
-      router.push("/");
-    });
-
-    socket.on("host-disconnected", () => {
-      router.push("/");
-    });
-
-    setStep("buzzer");
   };
 
   return (
@@ -41,24 +30,34 @@ export default function Home() {
         <p className="text-lg">Bez logowania. Bez opłat. Zawsze.</p>
       </div>
       <div className="z-10 flex-1 bg-black/60 flex flex-col justify-center items-center gap-3 text-center">
+        {/* Join room */}
         <h2 className="text-2xl">Dołącz</h2>
         <p>Masz już kod? Możesz dołączyć do pokoju poniżej.</p>
-        <div className="flex gap-2">
-          <Form>
-            <Input className="w-64" label="Kod pokoju" type="text" />
+        <Form onSubmit={handleJoin} className="items-center">
+          <div className="flex gap-2">
+            <Input
+              className="w-64"
+              label="Kod pokoju"
+              type="text"
+              value={roomId}
+              onChange={(e) => setRoomId(e.target.value.toUpperCase())}
+            />
             <Input
               className="w-64"
               label="Nickname"
               type="text"
               maxLength={16}
+              onChange={(e) => setNickname(e.target.value)}
             />
-          </Form>
-        </div>
-        <Button>Dołącz</Button>
+          </div>
+          <Button type="submit">Dołącz</Button>
+        </Form>
         <Divider className="my-3 w-[60%]" />
+
+        {/* Create room */}
         <h2 className="text-2xl">Stwórz</h2>
         <p>Możesz stworzyć pokój i zaprosić do niego graczy.</p>
-        <Button onPress={() => router.push('/host')}>Stwórz</Button>
+        <Button onPress={() => router.push("/host")}>Stwórz</Button>
       </div>
     </div>
   );

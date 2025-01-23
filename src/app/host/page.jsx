@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { initSocket, getSocket } from "@/lib/socket";
 import { useRouter } from "next/navigation";
@@ -15,6 +15,7 @@ import {
   Spacer,
   Checkbox,
   Button,
+  Tooltip
 } from "@heroui/react";
 
 import "@/styles/host.css";
@@ -24,7 +25,6 @@ export default function Host() {
   const [players, setPlayers] = useState([]);
   const [buzzOrder, setBuzzOrder] = useState([]);
   const [isLocked, setIsLocked] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const socket = initSocket();
@@ -33,11 +33,11 @@ export default function Host() {
       setRoomId(roomId);
     });
 
-    socket.on("player-joined", ({ players }) => {
+    socket.on("playerlist-update", ({ players }) => {
       setPlayers(players);
     });
 
-    socket.on("buzz-update", ({ buzzOrder }) => {
+    socket.on("buzzer-update", ({ buzzOrder }) => {
       setBuzzOrder(buzzOrder);
     });
 
@@ -74,34 +74,34 @@ export default function Host() {
 
   return (
     <div className="mt-16 mx-4 flex gap-4 items-start flex-wrap">
-      <Card className="flex-1 min-w-fit">
-        <CardBody>
-          <h2 className="text-3xl font-bold flex items-center justify-between">
-            Kod pokoju:{" "}
-            <Snippet
-              hideSymbol
-              disableTooltip
-              color="primary"
-              className="text-4xl"
-            >
-              {roomId}
-            </Snippet>
-          </h2>
-          <Spacer y={4} />
-          <h2 className="text-2xl flex items-center justify-between">
-            Dołącz na:{" "}
-            <Snippet
-              hideSymbol
-              disableTooltip
-              color="secondary"
-              className="text-3xl"
-            >
-              buzz.mcjk.cc
-            </Snippet>
-          </h2>
-        </CardBody>
-      </Card>
-      <div className="flex-[2] min-w-fit flex gap-4">
+      <div className="flex-1 flex flex-col gap-4">
+        <Card className="flex-1 min-w-fit">
+          <CardBody>
+            <h2 className="text-3xl text-nowrap font-bold flex items-center justify-between">
+              Kod pokoju:{" "}
+              <Snippet
+                hideSymbol
+                disableTooltip
+                color="primary"
+                className="text-4xl"
+              >
+                {roomId}
+              </Snippet>
+            </h2>
+            <Spacer y={4} />
+            <h2 className="text-2xl text-nowrap flex items-center justify-between">
+              Dołącz na:{" "}
+              <Snippet
+                hideSymbol
+                disableTooltip
+                color="secondary"
+                className="text-3xl"
+              >
+                buzz.mcjk.cc
+              </Snippet>
+            </h2>
+          </CardBody>
+        </Card>
         <Card className="flex-1">
           <CardHeader className="flex justify-between items-center">
             <h2>Połączeni gracze</h2>
@@ -114,10 +114,10 @@ export default function Host() {
               {players.map((player, index) => (
                 <motion.div
                   key={player}
-                  initial={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
                   <Card className="bg-default-100 mb-2">
                     <CardBody>
@@ -138,6 +138,8 @@ export default function Host() {
             </AnimatePresence>
           </CardBody>
         </Card>
+      </div>
+      <div className="flex-1 min-w-fit">
         <Card className="flex-1">
           <CardHeader className="flex justify-between items-center">
             <h2>Historia buzzerów</h2>
@@ -145,7 +147,27 @@ export default function Host() {
           </CardHeader>
           <Divider />
           <CardBody>
-            <p>To kod pokoju</p>
+            <p>test</p>
+          </CardBody>
+        </Card>
+      </div>
+      <div className="flex-1 min-w-fit">
+        <Card className="flex-1">
+          <CardHeader>
+            <h2>Ustawienia pokoju</h2>
+          </CardHeader>
+          <Divider />
+          <CardBody className="overflow-hidden">
+            <span className="flex items-center justify-between">
+              <Tooltip
+                className="max-w-96"
+                placement="under"
+                content="Umożliwia mitygację problemów spowodowanych opóźnieniem w przesyle danych między serwerem a klientem stosując synchronizację czasu i pomiar RTT."
+              >
+                Korekcja opóźnienia
+              </Tooltip>
+              <Checkbox defaultSelected />
+            </span>
           </CardBody>
         </Card>
       </div>

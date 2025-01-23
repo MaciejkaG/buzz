@@ -2,8 +2,9 @@ import { Kanit, Montserrat, Roboto } from "next/font/google";
 import { Providers } from "./providers";
 
 import "./globals.css";
-import Navbar from "@/components/navbar";
-import Background from "@/components/background";
+import Navbar from "@/components/Navbar";
+import Background from "@/components/Background";
+import { RouteChangeListener } from "@/components/RouteChangeListener";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -31,6 +32,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
+      <RouteChangeListener />
       <body
         className={`${roboto.variable} ${kanit.variable} ${montserrat.variable} antialiased`}
       >
