@@ -17,6 +17,7 @@ export const getSocket = () => {
 
 export const resetSocket = () => {
   if (socket) {
+    socket.off("sync-time");
     socket.close();
 
     socket = newSocket();

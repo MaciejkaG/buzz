@@ -30,10 +30,6 @@ export default function Join() {
       setBuzzerLocked(data.isLocked);
     });
 
-    socket.on("sync-time", (serverTime) => {
-      socket.emit("sync-response", Date.now());
-    });
-
     socket.on("kicked", () => {
       router.push("/");
     });

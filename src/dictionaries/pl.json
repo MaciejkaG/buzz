@@ -35,7 +35,7 @@
     },
     "roomSettings": {
       "title": "Ustawienia pokoju",
-      "latencyAdjustment": {
+      "latencyCorrection": {
         "title": "Korekta opóźnienia",
         "description": "Umożliwia mitygację problemów spowodowanych opóźnieniem w przesyle danych między serwerem a klientem stosując pomiar RTT."
       }
