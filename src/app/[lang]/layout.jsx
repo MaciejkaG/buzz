@@ -1,5 +1,6 @@
 import { Kanit, Montserrat, Roboto } from "next/font/google";
-import { Providers } from "./providers";
+import { Providers } from "@/app/[lang]/providers";
+import { getDictionary } from "@/lib/dictionaries";
 
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -8,20 +9,20 @@ import { RouteChangeListener } from "@/components/RouteChangeListener";
 
 const roboto = Roboto({
   variable: "--font-roboto",
-  subsets: ['latin'],
-  weight: ['400', '700'],
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
-  subsets: ['latin'],
-  weight: ['600', '700'],
+  subsets: ["latin"],
+  weight: ["600", "700"],
 });
 
 const kanit = Kanit({
   variable: "--font-kanit",
-  subsets: ['latin'],
-  weight: ['200'],
+  subsets: ["latin"],
+  weight: ["200"],
 });
 
 export const metadata = {
@@ -29,15 +30,20 @@ export const metadata = {
   description: "Best buzzer app",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children, params }) {
+  const lang = (await params).lang;
+  const dictionary = await getDictionary(lang); // Fetch the dictionary based on the locale
+
   return (
-    <html lang="en" className="dark">
+    <html lang={lang} className="dark">
       <RouteChangeListener />
       <body
         className={`${roboto.variable} ${kanit.variable} ${montserrat.variable} antialiased`}
       >
-        <Navbar />
-        <Providers>{children}</Providers>
+        <Providers lang={lang} dictionary={dictionary}>
+          <Navbar />
+          {children}
+        </Providers>
         <Background />
       </body>
     </html>

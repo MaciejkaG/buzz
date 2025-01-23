@@ -87,42 +87,43 @@ const gradient3Variants = {
   },
 };
 
+// Regex for checking if a pathname is on landing.
+const regex = /^\/[a-zA-Z]+\/?$/;
 export default function Background() {
   const pathname = usePathname();
-  const [isLandingPage, setIsLandingPage] = useState(pathname === "/");
+  const [isLandingPage, setIsLandingPage] = useState(regex.test(pathname));
 
   useEffect(() => {
-    setIsLandingPage(pathname === "/");
+    setIsLandingPage(regex.test(pathname));
   }, [pathname]);
 
   const baseGradientStyle = {
-    width: "30rem",
     aspectRatio: "1",
     position: "absolute",
     willChange: "transform", // Optimize performance
   };
 
   return (
-    <div className="fixed w-full h-screen top-0 left-0 overflow-hidden flex pointer-events-none -z-10">
+    <div className="fixed w-full h-full top-0 left-0 overflow-hidden flex pointer-events-none -z-10">
       <AnimatePresence>
         <motion.div
           variants={gradientVariants}
           animate={isLandingPage ? "landing" : "exit"}
         >
           <motion.div
-            className="bg-red-500 blur-[15rem]"
+            className="bg-red-500 blur-[15rem] w-[20rem] md:w-[30rem]"
             style={baseGradientStyle}
             variants={gradient1Variants}
             animate={isLandingPage ? "animate" : "static"}
           />
           <motion.div
-            className="bg-sky-500 blur-[15rem]"
+            className="bg-sky-500 blur-[15rem] w-[20rem] md:w-[30rem]"
             style={baseGradientStyle}
             variants={gradient2Variants}
             animate={isLandingPage ? "animate" : "static"}
           />
           <motion.div
-            className="bg-indigo-500 blur-[15rem]"
+            className="bg-indigo-500 blur-[15rem] w-[20rem] md:w-[30rem]"
             style={baseGradientStyle}
             variants={gradient3Variants}
             animate={isLandingPage ? "animate" : "static"}

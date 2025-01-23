@@ -1,0 +1,49 @@
+{
+  "landing": {
+    "title": "Best buzzer system",
+    "subtitle": "No login. No fees. Forever.",
+    "menu": {
+      "join": {
+        "title": "Join",
+        "subtitle": "Already have a code? You can join a room below.",
+        "roomCode": "Room code",
+        "nickname": "Nickname",
+        "button": "Join"
+      },
+      "create": {
+        "title": "Create",
+        "subtitle": "You can create a room and invite players.",
+        "button": "Create"
+      }
+    }
+  },
+  "host": {
+    "general": {
+      "roomCode": "Room code:",
+      "joinAt": "Join at:"
+    },
+    "playerList": {
+      "title": "Connected players",
+      "preventJoining": "Prevent joining",
+      "placeholder": "Nothing to see here...",
+      "kick": "Kick"
+    },
+    "buzzerHistory": {
+      "title": "Buzzer history",
+      "preventBuzzers": "Lock buzzers",
+      "placeholder": "Nothing to see here..."
+    },
+    "roomSettings": {
+      "title": "Room settings",
+      "latencyCorrection": {
+        "title": "Latency correction",
+        "description": "Enables mitigation of problems caused by data transit latency between the server and the client using RTT measurement."
+      }
+    }
+  },
+  "join": {
+    "buzzerOnline": "Buzzer online.\nPress to activate.",
+    "buzzerLocked": "Buzzer locked by host.",
+    "buzzerActivated": "Buzzer activated.\nWaiting for reset..."
+  }
+}

@@ -10,9 +10,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.5.10",
     "@heroui/react": "^2.6.14",
     "dotenv": "^16.4.7",
     "framer-motion": "^12.0.1",
+    "negotiator": "^1.0.0",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

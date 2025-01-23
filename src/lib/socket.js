@@ -6,7 +6,7 @@ let socket;
 
 export const initSocket = () => {
   if (!socket) {
-    socket = io();
+    socket = newSocket();
   }
   return socket;
 };
@@ -18,6 +18,19 @@ export const getSocket = () => {
 export const resetSocket = () => {
   if (socket) {
     socket.close();
-    socket = io();
+
+    socket = newSocket();
   }
+}
+
+// Helper function.
+function newSocket() {
+  const socket = io();
+
+  // realTime sync handler is baked into the socket whenever it is used.
+  socket.on("sync-time", () => {
+    socket.emit("sync-response");
+  });
+
+  return socket;
 }

@@ -1,0 +1,49 @@
+{
+  "landing": {
+    "title": "Najlepszy system buzzerów",
+    "subtitle": "Bez logowania. Bez opłat. Zawsze.",
+    "menu": {
+      "join": {
+        "title": "Dołącz",
+        "subtitle": "Masz już kod? Możesz dołączyc do pokoju poniżej.",
+        "roomCode": "Kod pokoju",
+        "nickname": "Nazwa użytkownika",
+        "button": "Dołącz"
+      },
+      "create": {
+        "title": "Stwórz",
+        "subtitle": "Możesz stworzyć pokój i zaprosić do niego graczy.",
+        "button": "Stwórz"
+      }
+    }
+  },
+  "host": {
+    "general": {
+      "roomCode": "Kod pokoju:",
+      "joinAt": "Dołącz na:"
+    },
+    "playerList": {
+      "title": "Połączeni gracze",
+      "preventJoining": "Zablokuj dołączanie",
+      "placeholder": "Nikogo tu nie ma...",
+      "kick": "Wyrzuć"
+    },
+    "buzzerHistory": {
+      "title": "Historia buzzerów",
+      "preventBuzzers": "Zablokuj buzzery",
+      "placeholder": "Nikogo tu nie ma..."
+    },
+    "roomSettings": {
+      "title": "Ustawienia pokoju",
+      "latencyAdjustment": {
+        "title": "Korekta opóźnienia",
+        "description": "Umożliwia mitygację problemów spowodowanych opóźnieniem w przesyle danych między serwerem a klientem stosując pomiar RTT."
+      }
+    }
+  },
+  "join": {
+    "buzzerOnline": "Buzzer online.\nNaciśnij by aktywować.",
+    "buzzerLocked": "Buzzer zablokowany przez hosta.",
+    "buzzerActivated": "Buzzer aktywny.\nOczekiwanie na reset..."
+  }
+}
