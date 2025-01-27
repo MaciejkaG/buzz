@@ -194,7 +194,13 @@ export default function Host() {
                       <CardBody>
                         <p className="flex justify-between items-center">
                           <span>{buzz.nickname}</span>
-                          <span className={!index ? "text-green-400" : "text-red-400"}>+{(buzzes[0].realTime - buzz.realTime) / 1000}</span>
+                          <span
+                            className={
+                              !index ? "text-green-400" : "text-red-400"
+                            }
+                          >
+                            +{(buzz.realTime - buzzes[0].realTime) / 1000}
+                          </span>
                         </p>
                       </CardBody>
                     </Card>
